@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <bean id="mainFrame" class="ui.MainFrame" init-method="init">
+      <property name="title">
+        <value>Wegbeschreibung</value>
+      </property>
+      <property name="size">
+        <ref bean="dimension"/>
+      </property>
+      <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+      </property>
+      <property name="visible">
+        <value>true</value>
+      </property>
+      <property name="defaultCloseOperation">
+        <value>3</value>
+      </property>
+      <property name="mainPanel">
+        <ref bean="mainPanel"/>
+      </property>
+  </bean>
+  
+  <bean id="dimension" class="java.awt.Dimension">
+      <constructor-arg value="1200"/>
+      <constructor-arg value="800"/>
+  </bean>
+  
+  <bean id="mainPanel" class="ui.MainPanel" init-method="init">
+    <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="routeToolBar">
+        <ref bean="routeToolBar"/>
+     </property>
+     <property name="layout">
+        <ref bean="layout"/>
+     </property>
+     <property name="picturePanel">
+        <ref bean="picturePanel"/>
+     </property>
+  </bean>
+  
+  <bean id="roomComboboxLeft" class="ui.RoomCombobox"  init-method="init">
+      <property name="visible">
+        <value>true</value>
+      </property>
+      <property name="building">
+        <ref bean="building"/>
+      </property>
+  </bean>
+  
+  <bean id="roomComboboxRight" class="ui.RoomCombobox" init-method="init">
+      <property name="visible">
+        <value>true</value>
+      </property>
+      <property name="building">
+        <ref bean="building"/>
+      </property>
+  </bean>
+  
+  <bean id="routeToolBar" class="ui.RouteToolBar" init-method="init">
+      <property name="roomComboboxRight">
+        <ref bean="roomComboboxRight"/>
+      </property>
+      <property name="roomComboboxLeft">
+        <ref bean="roomComboboxLeft"/>
+      </property>
+      <property name="startRoute">
+        <ref bean="startRouteButton"/>
+      </property>
+  </bean>
+  
+  <bean id="startRouteButton" class="ui.StartRouteButton">
+    <constructor-arg type="java.lang.String" value="Start route"/>
+      <property name="routeCalculator">
+        <ref bean="routeCalculator"/>
+      </property>
+      <property name="roomComboboxRight">
+        <ref bean="roomComboboxRight"/>
+      </property>
+      <property name="roomComboboxLeft">
+        <ref bean="roomComboboxLeft"/>
+      </property>
+      <property name="building">
+        <ref bean="building"/>
+      </property>
+  </bean>
+  
+  <bean id="layout" class="java.awt.BorderLayout">
+  </bean>
+  
+  <bean id="groundFloor" class="building.Floor" init-method="init">
+  <constructor-arg type="java.lang.String" value="EG"/>
+  <constructor-arg type="boolean" value="true"/>
+      <property name="sql">
+        <ref bean="sql"/>
+      </property>
+  </bean>
+  
+  <bean id="secondFloor" class="building.Floor" init-method="init">
+  <constructor-arg type="java.lang.String" value="OG2"/>
+  <constructor-arg type="boolean" value="false"/>
+      <property name="sql">
+        <ref bean="sql"/>
+      </property>
+  </bean>
+  
+  <bean id="sql" class="database.SQLiteDatabase" init-method="init">
+  </bean>
+  
+  <bean id="firstFloor" class="building.Floor" init-method="init">
+  <constructor-arg type="java.lang.String" value="OG1"/>
+  <constructor-arg type="boolean" value="false"/>
+      <property name="sql">
+        <ref bean="sql"/>
+      </property>
+  </bean>
+  
+  <bean id="building" class="building.Building" init-method="init">
+      <property name="groundFloor">
+        <ref bean="groundFloor"/>
+      </property>
+      <property name="secondFloor">
+        <ref bean="secondFloor"/>
+      </property>
+      <property name="firstFloor">
+        <ref bean="firstFloor"/>
+      </property>
+  </bean>
+  
+  <bean id="picturePanel" class="ui.PicturePanel" init-method="init">
+     <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="mergedPanel">
+        <ref bean="mergedPanel"/>
+     </property>
+  </bean>
+  
+  <bean id="scrollPanel1" class="ui.ScrollabelPanel" init-method="init">
+     <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="floor">
+        <ref bean="groundFloor"/>
+     </property>
+  </bean>
+  
+  <bean id="scrollPanel2" class="ui.ScrollabelPanel" init-method="init">
+     <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="floor">
+        <ref bean="firstFloor"/>
+     </property>
+  </bean>
+  
+  <bean id="scrollPanel3" class="ui.ScrollabelPanel" init-method="init">
+     <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="floor">
+        <ref bean="secondFloor"/>
+     </property>
+  </bean>
+  
+  <bean id="mergedPanel" class="ui.MergedPanel" init-method="init">
+     <property name="background">
+        <bean class="java.awt.Color" >
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+            <constructor-arg type="int" value="255" />
+        </bean>
+     </property>
+     <property name="scrollPanel1">
+        <ref bean="scrollPanel1"/>
+     </property>
+     <property name="scrollPanel2">
+        <ref bean="scrollPanel2"/>
+     </property>
+     <property name="scrollPanel3">
+        <ref bean="scrollPanel3"/>
+     </property>
+  </bean>
+  
+  <bean id="routeCalculator" class="calculator.RouteCalculator">
+  </bean>
+  
+</beans>
